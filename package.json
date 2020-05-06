@@ -1,0 +1,19 @@
+{
+  "name": "figma-design-tool",
+  "version": "1.0.0",
+  "description": "Design tool using the Figma API",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaydenkwright/figma-design-tool.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaydenkwright/figma-design-tool/issues"
+  },
+  "homepage": "https://github.com/jaydenkwright/figma-design-tool#readme"
+}
