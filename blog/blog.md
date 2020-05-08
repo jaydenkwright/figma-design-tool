@@ -20,6 +20,20 @@ The Figma developer blog has a post titled ["Want Figma API inspiration? Here's 
 
 # Tech Choices
 
-## Node.js / Express
+* Node.js / Express backend
 
+* Postgres(if needed)
 
+* GraphQL
+
+* React frontend 
+
+# Getting started
+
+## Authentication
+
+Ok so let's start with getting users authenticated first. The Figma API allows for developers to authentication through OAuth 2.
+
+> OAuth 2 is a web security protocol that allows 3rd party applications to establish a link between a user’s account and their access to a given API, on behalf of that user.
+
+It seems that first we must register our application. I'm exactly sure what i'm going to call it yet so let's just go with "Design Tool".

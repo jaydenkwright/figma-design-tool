@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const auth = require('./routes/auth')
 const figma = require('./routes/figma')
 const app = express()
 
@@ -10,6 +11,7 @@ app.use(cors({
 }));
 
 app.use('/figma', figma)
+app.use('/auth', auth)
 
 const port = process.env.PORT || 5000
 
