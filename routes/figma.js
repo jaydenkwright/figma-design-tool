@@ -1,3 +1,6 @@
+const express = require('express')
+const router = express.Router()
+
 const figmaData = {
     "document": {
       "id": "0:0",
@@ -258,8 +261,16 @@ const figmaData = {
     "role": "owner"
   }
 
-//console.log(figmaData.document.children)
-figmaData.document.children
-.filter(child => child.type === 'CANVAS')[0].children
-.filter(child => child.type === 'FRAME')
-.map(frame => frame.children.map(f => console.log(f.fills[0].color.r)))
+
+router.get('/colors', (req, res) => {
+  const data = figmaData.document.children
+    .filter(child => child.type === 'CANVAS')[0].children
+    .filter(child => child.type === 'FRAME')
+    .map(frame => frame.children.map(f => f.name))
+    res.json({name: data})
+})
+
+router.post('/callback', (req, res) => {
+  console.log(req.body)
+})
+module.exports = router
