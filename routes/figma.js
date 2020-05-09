@@ -15,6 +15,22 @@ const getToken = async () => {
   }
 }
 //getToken()
+
+router.get('/document', async (req, res) => {
+  try{
+    token = 'Z0lgipgstKyOeIGWG9_A3ylQlPEirPpQrW4h8II2'
+    const response = await axios.get('https://api.figma.com/v1/files/L473FwdLL2rMjFUa2w5NmO', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      }
+    )
+    console.log(response.data.document)
+    res.json(response.data.document)
+  }catch(err){
+    console.log(err)
+  }
+})
 const api = async () => {
   try{
     token = 'Z0lgipgstKyOeIGWG9_A3ylQlPEirPpQrW4h8II2'
