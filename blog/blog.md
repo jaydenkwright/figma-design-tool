@@ -36,4 +36,93 @@ Ok so let's start with getting users authenticated first. The Figma API allows f
 
 > OAuth 2 is a web security protocol that allows 3rd party applications to establish a link between a user’s account and their access to a given API, on behalf of that user.
 
-It seems that first we must register our application. I'm exactly sure what i'm going to call it yet so let's just go with "Design Tool".
+The first step seems to be to send users to the following URl
+
+```
+GET https://www.figma.com/oauth?
+  client_id=:client_id&
+  redirect_uri=:callback&
+  scope=file_read&
+  state=:state&
+  response_type=code
+```
+
+To do this we need the Client ID from the app that we just registered, the callback URL and a state(randomly generated value to that needs to be stored). After the user vists the URL they will be asked to log in to figma and allow access to our application. If the user allows us access then it will redirect to our callback URL with a ```code``` and ```state``` as the query parameters. The ```state``` is the same randomly generated value from before while the ```code``` is a value sent to us from the Figma API that can be exchanged for an access token.
+
+After we have our code, we can pass it back to the Figma API in the form of a ```POST``` request.
+
+``` 
+POST https://www.figma.com/api/oauth/token?
+  client_id=:client_id&
+  client_secret=:client_secret&
+  redirect_uri=:callback&
+  code=:code&
+  grant_type=authorization_code
+```
+
+Once again we need the Client ID and callback URL, but this time we also need the Client secret and the code. This will send back JSON will the following values
+
+``` json
+{
+  "access_token": <TOKEN>,
+  "expires_in": <EXPIRATION (in seconds)>,
+  "refresh_token": <REFRESH TOKEN>
+}
+```
+
+The ```access_token``` will be used for making ```GET``` requests for files and images. The ```expires_in``` value tells the number of seconds before the token expires and ```refresh_token``` can used to refresh the access token after it expires.
+
+I was able to implement this with the following Node.JS code
+
+``` javascript
+router.get('/callback', async (req, res) => {
+    const { code } = req.query
+    try{
+        const response = await axios.post(
+        `https://www.figma.com/api/oauth/token?client_id=${process.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}&redirect_uri=${process.env.CALLBACK}&code=${code}&grant_type=authorization_code`)
+        const { access_token, refresh_token, expires_in } = response.data
+        res.cookie('access_token', access_token, {
+            httpOnly: true
+        })
+        res.json(response.data)
+    }catch(err){
+        res.json({ error: err })
+    }
+})
+```
+
+How it works is that the user vists the given URL, they allow access our application access to their account and then are redirected to /callback?code=:code&state=:state. The code is then sent back to the API with a ```POST``` request using ```axios```. In return, we get the ```access_token``` and are saving it as a cookie so that the user does not have to login every single time they visit our application.
+
+## Files
+
+When we use the access token that we received back from the API to make a request for a file, we get something back in the following format
+
+``` json
+{
+  "components": {},
+  "document": {
+    "children": [
+      {
+        "backgroundColor": {
+          "a": 1,
+          "b": 0.8980392156862745,
+          "g": 0.8980392156862745,
+          "r": 0.8980392156862745
+        },
+        "children": [],
+        "exportSettings": [],
+        "id": "0:1",
+        "name": "Page 1",
+        "type": "CANVAS",
+        "visible": true
+      }
+    ],
+    "id": "0:0",
+    "name": "Document",
+    "type": "DOCUMENT",
+    "visible": true
+  },
+  "schemaVersion": 0
+}
+```
+

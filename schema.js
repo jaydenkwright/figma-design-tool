@@ -25,7 +25,8 @@ const CanvasType = new GraphQLObjectType({
         id: { type: GraphQLString },
         name: { type: GraphQLString },
         type: { type: GraphQLString },
-        children: { type: new GraphQLList(FrameType) } 
+        children: { type: new GraphQLList(FrameType) }, 
+        backgroundColor: { type: ColorType }
     })
 })
 

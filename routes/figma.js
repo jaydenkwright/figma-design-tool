@@ -2,24 +2,12 @@ const express = require('express')
 const router = express.Router()
 const axios = require('axios')
 
-//const token = 'H4uCVnhFXHrACY7LypIRIdS44vaUxiBxNdp-ThOH'
-const refresh = 'DkOASnOjJrwRrl20TouNLvqj8WZc0D05KDP30wZvOTMDdPzyucGk7Q'
-const getToken = async () => {
-  try{
-    const code = 'HfuXUAMnGOHeHGTjBTa3mBaN4'
-    const res = await axios.post(
-      `https://www.figma.com/api/oauth/token?client_id=XHqtRRkNPxiFkkosx4ZcOY&client_secret=hAOb2JxuDOKvkRZNL7CWyKK8lXsjRn&redirect_uri=http://localhost:5000/auth/callback&code=${code}&grant_type=authorization_code`)
-      console.log(res)
-  }catch(err){
-    console.log(err)
-  }
-}
-//getToken()
+
 
 router.get('/document', async (req, res) => {
   try{
     token = 'Z0lgipgstKyOeIGWG9_A3ylQlPEirPpQrW4h8II2'
-    const response = await axios.get('https://api.figma.com/v1/files/L473FwdLL2rMjFUa2w5NmO', {
+    const response = await axios.get('https://api.figma.com/v1/files/CpRDjmjr8YxIVYcbeiinKP', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -34,17 +22,25 @@ router.get('/document', async (req, res) => {
 const api = async () => {
   try{
     token = 'Z0lgipgstKyOeIGWG9_A3ylQlPEirPpQrW4h8II2'
-    const res = await axios.get('https://api.figma.com/v1/files/L473FwdLL2rMjFUa2w5NmO', {
+    const res = await axios.get('https://api.figma.com/v1/files/CpRDjmjr8YxIVYcbeiinKP', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       }
     )
-    console.log(res.data.document)
+    //console.log(res.data.document)
+    const file = res.data
+    //console.log(file)
+    let frames = file.document.children
+      .filter(child => child.type === 'CANVAS')
+      .map(child => child.children)
+        console.log(frames)
   }catch(err){
     console.log(err)
   }
 }
+
+api()
 
 //api()
 
