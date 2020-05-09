@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const axios = require('axios')
 
-const token = 'H4uCVnhFXHrACY7LypIRIdS44vaUxiBxNdp-ThOH'
+//const token = 'H4uCVnhFXHrACY7LypIRIdS44vaUxiBxNdp-ThOH'
 const refresh = 'DkOASnOjJrwRrl20TouNLvqj8WZc0D05KDP30wZvOTMDdPzyucGk7Q'
 const getToken = async () => {
   try{
@@ -14,17 +14,17 @@ const getToken = async () => {
     console.log(err)
   }
 }
-
 //getToken()
 const api = async () => {
   try{
+    token = 'Z0lgipgstKyOeIGWG9_A3ylQlPEirPpQrW4h8II2'
     const res = await axios.get('https://api.figma.com/v1/files/L473FwdLL2rMjFUa2w5NmO', {
-      headers: {
-        'Authorization': `Bearer ${token}`
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       }
-    }
     )
-    console.log(res.data)
+    console.log(res.data.document)
   }catch(err){
     console.log(err)
   }

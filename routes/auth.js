@@ -14,7 +14,7 @@ router.get('/callback', async (req, res) => {
             httpOnly: true
         })
         console.log(response.data.access_token)
-        res.json(response.data.access_token)
+        res.json(response.data)
     }catch(err){
         console.log(err)
     }
