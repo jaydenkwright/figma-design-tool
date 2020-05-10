@@ -50,7 +50,9 @@ const VectorType = new GraphQLObjectType({
         blendMode: { type: GraphQLString },
         absoluteBoundingBox: { type: BoundingBoxType},
         constraints: { type: ConstraintType },
-        fills: { type: new GraphQLList(FillsType) }
+        fills: { type: new GraphQLList(FillsType) },
+        children: { type: new GraphQLList(VectorType)}
+    
     })
 })
 

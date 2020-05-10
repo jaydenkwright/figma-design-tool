@@ -22,7 +22,7 @@ router.get('/document', async (req, res) => {
 const api = async () => {
   try{
     token = 'Z0lgipgstKyOeIGWG9_A3ylQlPEirPpQrW4h8II2'
-    const res = await axios.get('https://api.figma.com/v1/files/CpRDjmjr8YxIVYcbeiinKP', {
+    const res = await axios.get('https://api.figma.com/v1/files/ejhGAvr1GzNcn1eaEn3AbsD1', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -34,7 +34,7 @@ const api = async () => {
     let frames = file.document.children
       .filter(child => child.type === 'CANVAS')
       .map(child => child.children)
-        console.log(frames)
+        console.log({frames, canvas: {name: 'page 1'}})
   }catch(err){
     console.log(err)
   }
