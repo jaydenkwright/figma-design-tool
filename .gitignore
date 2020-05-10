@@ -5,6 +5,8 @@
 .vscode
 .env
 
+figmaTest.js
+
 # testing
 /coverage
 

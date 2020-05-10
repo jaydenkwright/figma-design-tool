@@ -3,7 +3,7 @@ const { GraphQLObjectType,
     GraphQLString,  
     GraphQLList,
     GraphQLSchema,
-    GraphQLFloat
+    GraphQLFloat, 
 } = require('graphql')
 const axios = require('axios')
 
@@ -91,6 +91,13 @@ const ColorType = new GraphQLObjectType({
         b: { type: GraphQLFloat },
         a: { type: GraphQLFloat }
     })
+})
+
+// images
+const ImageType = new GraphQLObjectType({
+    name: 'images',
+    err: { type: GraphQLString},
+    images: { type: GraphQLString }
 })
 
 const RootQuery = new GraphQLObjectType({
