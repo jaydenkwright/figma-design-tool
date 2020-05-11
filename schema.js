@@ -105,9 +105,13 @@ const RootQuery = new GraphQLObjectType({
     fields: {
         document: {
             type: DocumentType,
-            resolve(parent, args){
-                return axios.get('http://localhost:5000/figma/document')
-                    .then(res => res.data)
+            resolve(parent, args, context){
+                return axios.get(`http://localhost:5000/figma/document/`, 
+                {withCredentials: true, 
+                    headers: {
+                        'authorization': `${context.cookies.access_token}`
+                    }})
+                    .then(response => response.data)
             }
         }   
     }

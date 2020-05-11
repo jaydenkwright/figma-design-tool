@@ -13,12 +13,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser())
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost:5000',
 }));
-app.use('/graphql', graphqlHTTP({
-    schema,
-    graphiql: true
-}))
+app.use('/graphql', (req, res) => {
+    return graphqlHTTP({
+      schema,
+      graphiql: true,
+    })(req, res);
+});
 
 app.use('/figma', figma)
 app.use('/auth', auth)
