@@ -96,8 +96,10 @@ const ColorType = new GraphQLObjectType({
 // images
 const ImageType = new GraphQLObjectType({
     name: 'images',
-    err: { type: GraphQLString},
-    images: { type: GraphQLString }
+    fields: () => ({
+        err: { type: GraphQLString},
+        images: { type: GraphQLString }
+    })
 })
 
 const RootQuery = new GraphQLObjectType({
