@@ -29,7 +29,10 @@ router.get('/images/:key/:ids', async(req, res) => {
         }
       }
     )
-    res.json(response.data.images)
+    res.json({
+      err: response.data.err,
+      images: response.data.images[Object.keys(response.data.images)]
+    })
   }catch(err){
     res.json(err)
   }
