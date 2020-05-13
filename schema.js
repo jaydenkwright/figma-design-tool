@@ -107,8 +107,11 @@ const RootQuery = new GraphQLObjectType({
     fields: {
         document: {
             type: DocumentType,
+            args: {
+                key: { type: GraphQLString }
+            },
             resolve(parent, args, context){
-                return axios.get(`http://localhost:5000/figma/document/`, 
+                return axios.get(`http://localhost:5000/figma/document/${args.key}`, 
                 {withCredentials: true, 
                     headers: {
                         'authorization': `${context.cookies.access_token}`

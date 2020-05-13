@@ -4,10 +4,10 @@ const axios = require('axios')
 
 
 
-router.get('/document/', async (req, res) => {
+router.get('/document/:key', async (req, res) => {
   try{
     token = req.headers.authorization || req.cookies.access_token
-    const response = await axios.get('https://api.figma.com/v1/files/8uwcYHQmbaHGFgZ59KkOYU', {
+    const response = await axios.get(`https://api.figma.com/v1/files/${req.params.key}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -16,7 +16,7 @@ router.get('/document/', async (req, res) => {
     console.log(response.data.document)
     res.json(response.data.document)
   }catch(err){
-    //console.log(err)
+    console.log(err)
   }
 })
 
