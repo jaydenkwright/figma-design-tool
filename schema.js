@@ -118,6 +118,21 @@ const RootQuery = new GraphQLObjectType({
                     }})
                     .then(response => response.data)
             }
+        },
+        image: {
+            type: ImageType,
+            args: {
+                key: { type: GraphQLString },
+                ids: { type: GraphQLString }
+            },
+            resolve(parent, args, context){
+                return axios.get(`http://localhost:5000/figma/images/${args.key}/${args.ids}`, 
+                {withCredentials: true, 
+                    headers: {
+                        'authorization': `${context.cookies.access_token}`
+                    }})
+                    .then(response => response.data)
+            }
         }   
     }
 })
